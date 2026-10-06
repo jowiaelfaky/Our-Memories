@@ -1,0 +1,129 @@
+<div class="p-6 font-sans text-right pb-20 bg-rose-50 min-h-screen" dir="rtl">
+  
+  <div class="text-center bg-white/80 p-6 rounded-3xl shadow-sm border border-rose-200 max-w-2xl mx-auto mb-12 mt-6">
+    <h3 class="text-xl text-rose-800 font-bold mb-4">بندق ولوز مع بعض بقالهم...</h3>
+    <div class="flex justify-center gap-4 text-rose-600 font-bold">
+      <div class="bg-rose-100 p-3 rounded-xl min-w-[70px]"><span>{{timeElapsed.days}}</span><br><small>يوم</small></div>
+      <div class="bg-rose-100 p-3 rounded-xl min-w-[70px]"><span>{{timeElapsed.hours}}</span><br><small>ساعة</small></div>
+      <div class="bg-rose-100 p-3 rounded-xl min-w-[70px]"><span>{{timeElapsed.minutes}}</span><br><small>دقيقة</small></div>
+      <div class="bg-rose-100 p-3 rounded-xl min-w-[70px] animate-pulse"><span>{{timeElapsed.seconds}}</span><br><small>ثانية</small></div>
+    </div>
+  </div>
+
+  <div class="text-center mb-16">
+    <button (click)="showSorryModal = true" class="bg-red-400 text-white px-8 py-3 rounded-full shadow-lg font-bold hover:bg-red-500 transition-all">زعلان مني؟ 🥺</button>
+  </div>
+
+  <div *ngIf="showSorryModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-3xl max-w-sm w-full text-center relative overflow-hidden">
+      <h2 class="text-2xl font-bold text-rose-900 mb-2">مقدرش على زعلك يا لوز! ❤️</h2>
+      <p class="text-rose-600 mb-8 font-medium">حقك عليا يا أغلى الناس، والله ما قصدت أضايقك... سامحني بقا ❤️</p>
+      <div class="flex flex-col gap-4 relative">
+        <button (click)="acceptApology()" class="bg-green-400 text-white py-3 rounded-xl font-bold">خلاص سامحتك 😍</button>
+        <button (mouseover)="escape()" [ngStyle]="escapeStyle" class="bg-gray-200 text-gray-700 py-3 rounded-xl font-bold escape-btn">لسه زعلان 😤</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-2xl text-center text-rose-900 font-bold mb-6">هنا بدأت حكايتنا 📍</h2>
+  <div class="max-w-4xl mx-auto bg-white rounded-3xl p-8 text-center shadow-md border-t-4 border-rose-300 mb-16">
+     <div class="text-6xl mb-4">🗺️</div>
+     <h3 class="text-xl font-bold text-rose-800 mb-2">مكان أول لقاء</h3>
+     <p class="text-rose-500 mb-6">المكان اللي بدأت فيه أحلى قصة لينا</p>
+     <a href="https://maps.google.com" target="_blank" class="bg-rose-400 text-white px-6 py-2 rounded-full font-bold shadow-sm inline-block">افتح الخريطة</a>
+  </div>
+
+  <h3 class="text-2xl text-center text-rose-800 font-bold mb-8">حاجات بتاعتنا وبس 🤫</h3>
+  <div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto mb-16">
+    <div class="bg-rose-100 p-6 rounded-2xl flex-1 min-w-[200px] text-center shadow-sm">
+      <span class="text-3xl block mb-2">🥰</span>
+      <h4 class="font-bold text-rose-800">أكتر اسم دلع</h4>
+      <p class="text-rose-600">بندق ولوز</p>
+    </div>
+    <div class="bg-rose-100 p-6 rounded-2xl flex-1 min-w-[200px] text-center shadow-sm">
+      <span class="text-3xl block mb-2">🎨</span>
+      <h4 class="font-bold text-rose-800">حاجة بنحب نعملها سوا</h4>
+      <p class="text-rose-600">نرسّم نص قلب والتاني يكمله</p>
+    </div>
+  </div>
+
+  <h3 class="text-2xl text-center text-rose-800 font-bold mb-8">جوابات سرية 💌</h3>
+  <div class="flex flex-wrap justify-center gap-6 mb-16 max-w-5xl mx-auto">
+    <div *ngFor="let letter of letters; let i = index" class="w-full md:w-80">
+      <div (click)="openLetter(i)" class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-rose-400 cursor-pointer transition-all hover:-translate-y-1">
+        <div class="flex justify-between items-center">
+          <span class="text-2xl">{{ letter.isOpen ? '📖' : '✉️' }}</span>
+          <h4 class="text-lg font-bold text-rose-700">{{letter.title}}</h4>
+        </div>
+        <div *ngIf="letter.isOpen" class="animate-fade-in mt-4 text-rose-800 border-t border-rose-100 pt-4">
+          {{letter.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="text-2xl text-center text-rose-800 font-bold mb-8">مفضلاتنا 🎧🎬</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+    <div (click)="toggleSong()" class="bg-white p-8 rounded-3xl shadow-md border-t-4 border-rose-400 cursor-pointer text-center group">
+      <div class="text-6xl mb-4 transition-transform group-hover:scale-110">{{ isPlaying ? '🎶' : '📻' }}</div>
+      <h4 class="text-xl font-bold text-rose-800">أغنيتنا المفضلة</h4>
+    </div>
+    <div (click)="toggleMovie()" class="bg-white p-8 rounded-3xl shadow-md border-t-4 border-rose-400 cursor-pointer text-center relative overflow-hidden flex items-center justify-center min-h-[150px]">
+      <div *ngIf="!showMovie">
+        <div class="text-6xl mb-4">🍿</div>
+        <h4 class="text-xl font-bold text-rose-800">فيلمنا المفضل</h4>
+      </div>
+      <img *ngIf="showMovie" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500" class="absolute inset-0 w-full h-full object-cover animate-fade-in" />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+    <div class="bg-white p-8 rounded-3xl shadow-md text-center border-b-4 border-rose-200">
+      <div class="text-5xl mb-4">🫙</div>
+      <button (click)="getReason()" class="bg-rose-400 text-white px-4 py-2 rounded-full mb-4 font-bold shadow-sm">اسحب ورقة سعادة</button>
+      <p *ngIf="currentReason" class="animate-fade-in text-rose-700 italic font-medium">" {{currentReason}} "</p>
+    </div>
+    <div class="bg-white p-8 rounded-3xl shadow-md text-center border-b-4 border-rose-200">
+      <div class="text-5xl mx-auto mb-4" [ngClass]="{'animate-spin': isSpinning}">🎡</div>
+      <button (click)="spinWheel()" [disabled]="isSpinning" class="bg-rose-500 text-white px-4 py-2 rounded-full font-bold shadow-sm">لف عجلة الخروجات</button>
+      <p *ngIf="selectedOption" class="mt-4 font-bold text-rose-900 animate-bounce">{{selectedOption}}</p>
+    </div>
+  </div>
+
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-md mb-16">
+    <h3 class="text-xl font-bold text-rose-800 mb-6 text-center">أحلامنا سوا ✨</h3>
+    <div *ngFor="let item of bucketList; let i = index" (click)="toggleTask(i)" class="flex items-center gap-4 p-3 border-b border-rose-50 cursor-pointer hover:bg-rose-50 transition-all group">
+      <div class="custom-checkbox flex-shrink-0" [class.checked]="item.done">
+        <span *ngIf="item.done">❤️</span>
+      </div>
+      <span [class.line-through]="item.done" [class.text-gray-400]="item.done" class="text-rose-900 font-medium">{{ item.text }}</span>
+    </div>
+  </div>
+
+  <h2 class="text-2xl text-center text-rose-900 font-bold mb-8">ذكرياتنا 📸</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
+    <div *ngFor="let mem of memories; let i = index" class="relative bg-white rounded-3xl shadow-lg cursor-pointer overflow-hidden h-64 flex items-center justify-center group" (click)="revealMemory(i)">
+      <div *ngIf="mem.animating" class="absolute z-20 text-red-500 text-6xl animate-fly-heart">❤️</div>
+      <div *ngIf="!mem.revealed" class="text-center p-6">
+        <div class="text-rose-400 text-4xl mb-2">💌</div>
+        <p class="text-rose-900 font-bold">{{ mem.date }}</p>
+      </div>
+      <div *ngIf="mem.revealed" class="w-full h-full animate-fade-in p-1 bg-rose-100">
+        <img *ngIf="mem.mediaType === 'image'" [src]="mem.mediaUrl" class="w-full h-full object-cover rounded-2xl" />
+        <video *ngIf="mem.mediaType === 'video'" [src]="mem.mediaUrl" class="w-full h-full object-cover rounded-2xl" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-sm mx-auto bg-gray-900 p-6 rounded-3xl text-center shadow-xl mb-12 border-b-8 border-black">
+    <div class="text-4xl mb-2">🔒</div>
+    <h3 class="text-white font-bold mb-2">كبسولة الزمن</h3>
+    <p class="text-gray-400 text-sm mb-4">ممنوع الفتح قبل الفرح</p>
+    <button (click)="showCapsuleAlert()" class="bg-gray-800 text-gray-400 px-4 py-2 rounded-lg text-sm hover:bg-gray-700 transition-all">حاول تفتح</button>
+  </div>
+
+  <div class="mt-20 text-center max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold text-rose-900 leading-relaxed mb-4">"مهما الأيام لفت وطالت، إحنا لبعض، وهنكمل حكايتنا للآخر."</h1>
+    <p class="text-rose-500 text-xl font-bold">بحبك يا لوز ❤️</p>
+  </div>
+</div>
